@@ -1,0 +1,276 @@
+<head>
+
+<style>
+  /* Styling for the menu */
+  #menu {
+    list-style-type: none;
+    padding: 0;
+  }
+  #menu li {
+    display: inline;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  /* Styling for the tables */
+  .table-container {
+    display: none;
+  }
+  .table-container.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<ul id="menu">
+  <li onclick="showTable('yourFriends')">Your Friends</li>
+  <li onclick="showTable('users')">Users</li>
+  <li onclick="showTable('trade')">Trade</li>
+  <li onclick="showTable('friendRequests')">Friend Requests</li>
+</ul>
+
+<div id="yourFriends" class="table-container active">
+  <!-- Table for yourFriends list will be generated dynamically -->
+</div>
+
+<div id="users" class="table-container">
+  <!-- Table for users list will be generated dynamically -->
+</div>
+
+<div id="trade" class="table-container">
+  <!-- Table for trade list will be generated dynamically -->
+</div>
+
+<div id="friendRequests" class="table-container">
+  <!-- Table for friend request list will be generated dynamically -->
+</div>
+
+<div class="container">
+  <form id="username" action="javascript:sendItem">
+      <p><label>
+          Friend ID:
+          <input class="userInput" type="text" name="uid" id="uid" required>
+      </label></p>
+      <p ><label>
+          Item:
+          <input class="userInput" type="item" name="item" id="item" required>
+      </label></p>
+      <p>
+          <button id="sendButton">Send</button>
+      </p>
+  </form>
+</div>
+
+<script>
+  var yourFriends = [];
+  var friendRequests = [];
+  var users = [];
+  var trade = [];
+  const friendUrl = 'https://lmc.stu.nighthawkcodingsociety.com/api/users/send';
+  var curr_uid = localStorage.getItem("uid");
+  const url = "https://lmc.stu.nighthawkcodingsociety.com/api/users/";
+  const frUrl = 'https://lmc.stu.nighthawkcodingsociety.com/api/users/friendrq';
+  const options = {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'default',
+      credentials: 'include',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  };
+
+  function generateTable(containerId, dataList) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = ''; // Clear previous items
+    var table = document.createElement('table');
+    for (let i = 0; i < dataList.length; i++) {
+      var row = table.insertRow();
+      var cell = row.insertCell();
+      cell.appendChild(document.createTextNode(dataList[i]));
+
+      if (containerId == "users") {
+        var request = row.insertCell()
+        var addFriend = document.createElement("button")
+        addFriend.textContent = "Add friend";
+        addFriend.onclick = function() {
+          const user = localStorage.getItem("uid");
+          const body = {
+            sender: user,
+            receiver: dataList[i],
+          };
+          console.log(body)
+          const authOptions = {
+            ...options, // This will copy all properties from options
+            method: 'POST', // Override the method property
+            cache: 'no-cache', // Set the cache property
+            body: JSON.stringify(body)
+          };
+          fetch(frUrl, authOptions)
+          .then(response => {
+              // handle error response from Web API
+              if (!response.ok) {
+                  const errorMsg = response.status;
+                  console.log(errorMsg);
+                  return;
+              }
+          })
+          // catch fetch errors (ie ACCESS to server blocked)
+          .catch(err => {
+              console.error(err);
+          });
+          }
+          request.append(addFriend);
+      }
+
+      if (containerId == "friendRequests") {
+        var fr = row.insertCell()
+        var accept = document.createElement("button")
+        accept.textContent = "Accept Friend Request";
+        accept.onclick = function() {
+          const user = localStorage.getItem("uid");
+          const body = {
+            action: "accepted",
+            sender: dataList[i],
+            receiver: user,
+          };
+          console.log(body)
+          const authOptions = {
+            ...options, // This will copy all properties from options
+            method: 'DELETE', // Override the method property
+            cache: 'no-cache', // Set the cache property
+            body: JSON.stringify(body)
+          };
+          fetch(frUrl, authOptions)
+          .then(response => {
+              // handle error response from Web API
+              if (!response.ok) {
+                  const errorMsg = response.status;
+                  console.log(errorMsg);
+                  return;
+              }
+          })
+          // catch fetch errors (ie ACCESS to server blocked)
+          .catch(err => {
+              console.error(err);
+          });
+          }
+          fr.append(accept);
+      }
+    }
+    container.appendChild(table);
+  }
+
+  function sendItem(){
+    const body = {
+            uid: document.getElementById("uid").value,
+            items: document.getElementById("item").value,
+        };
+        const authOptions = {
+            ...options, // This will copy all properties from options
+            method: 'POST', // Override the method property
+            cache: 'no-cache', // Set the cache property
+            body: JSON.stringify(body)
+        };
+    fetch(friendUrl, authOptions)
+    .then(response => {
+        // handle error response from Web API
+        if (!response.ok) {
+            const errorMsg = 'Login error: ' + response.status;
+            console.log(errorMsg);
+            return;
+        }
+        // Success!!!
+        // reload the page
+        // window.location.reload();
+        alert("you just sent an item!");
+    })
+    // catch fetch errors (ie ACCESS to server blocked)
+    .catch(err => {
+        console.error(err);
+    });
+  }
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   const submitButton = document.querySelector('#username button');
+  //   if (submitButton) {
+  //       submitButton.addEventListener('click', sendItem());
+  //   }
+  // });
+  fetch(url, options)
+      // response is a RESTful "promise" on any successful fetch
+      .then(response => {
+          // check for response errors and display
+          if (response.status !== 200) {
+              if (response.status === 401 || response.status == 403) {
+                  // Unauthorized - Redirect to 401 error page
+                  window.location.href = "/lmc-frontend/lmc-login";
+              }
+          }
+          // valid response will contain JSON data
+          response.json().then(data => {
+              console.log(data);
+              for (let i = 0; i < data.length; i++) {
+                  var user = data[i];
+                  users.push(user.uid);
+                  if (user.uid == curr_uid) {
+                    //changes from json to list
+                    var parsed = JSON.parse(user.friends)
+                    for (var j = 0; j < parsed.length; j++){
+                      yourFriends.push(parsed[j]);
+                    }
+                    var parsed2 = JSON.parse(user.items)
+                    for (var k = 0; k < parsed2.length; k++){
+                      trade.push(parsed2[k]);
+                    }
+                    var parsed3 = JSON.parse(user.friendrq)
+                    for (var p = 0; p < parsed3.length; p++){
+                      friendRequests.push(parsed3[p]);
+                    }
+                  } 
+              }
+              //filling up the dropdown t ables
+              generateTable('yourFriends', yourFriends);
+              generateTable('users', users);
+              generateTable('trade', trade);
+              generateTable('friendRequests', friendRequests);
+              console.log("friends", yourFriends);
+              console.log("users", users);
+              console.log("items", trade);
+              console.log("frs", friendRequests)
+          });
+      })
+      // catch fetch errors (ie ACCESS to server blocked)
+      .catch(err => {
+          console.error(err);
+      });
+
+  // I used chatgpt to help with the table switching
+  function showTable(tableId) {
+    console.log(tableId);
+    // Hide all table containers
+    var tables = document.querySelectorAll('.table-container');
+    tables.forEach(function(table) {
+      table.classList.remove('active');
+    });
+    
+    // Show the selected table container
+    var selectedTable = document.getElementById(tableId);
+    selectedTable.classList.add('active');
+  }
+
+  const sendButton = document.getElementById("sendButton")
+  sendButton.addEventListener("click", function() {
+    var receiver = document.getElementById("uid").value
+    var thing = document.getElementById("item").value
+    if (yourFriends.includes(receiver)) {
+        sendItem();
+    } else {
+        alert(`You have to be friends with ${receiver} before sending them an item!`);
+    }
+  });
+  console.log("friends ",yourFriends)
+  console.log("users",users)
+  console.log("frs",friendRequests)
+</script>
+
+</body>

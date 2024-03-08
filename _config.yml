@@ -1,0 +1,22 @@
+title: Let 'em Cook
+description: The frontend for Let 'em Cook
+owner_name: Trevor Huang
+github_username: trevorhuang1
+github_repo: "lmc-frontend"
+baseurl: "/lmc-frontend"
+remote_theme: jekyll/minima
+minima:
+  social_links:
+    - { platform: github, user_url: "https://github.com/trevorhuang1"}
+    - { platform: github, user_url: "https://github.com/hanlunli"}
+    - { platform: github, user_url: "https://github.com/lakshusan"}
+    - { platform: github, user_url: "https://github.com/M8tth3"}
+    - { platform: github, user_url: "https://github.com/ad1tyad3sa1"}
+# remote_theme: pages-themes/dinky@v0.2.0
+# remote_theme: pages-themes/minimal@v0.2.0
+# remote_theme: pages-themes/hacker@v0.2.0
+# remote_theme: pages-themes/cayman@v0.2.0
+# remote_theme: pages-themes/time-machine@v0.2.0
+plugins:
+- jekyll-remote-theme
+future: true

@@ -1,0 +1,91 @@
+$main-font: 'Lobster', cursive;
+$font-color: rgb(255, 255, 255);
+header, footer{
+    display: none!important;
+    font-family: $main-font;
+    background-color: #ceccac!important;
+}
+
+
+label, p {
+  font-family: $main-font;
+}
+body {
+  font-family: 'Trattatello', fantasy	; 
+  background-color: #2d0d25!important;
+  background-size: 400% 400%;
+  overflow-y: hidden;
+}
+
+  .snow:after {
+    margin-left: -250px;
+    opacity: 0.5;
+    filter: blur(2px);
+    animation-duration: 6s;
+    animation-direction: reverse;
+    z-index: -4;
+  }
+  
+  .snow:before {
+    margin-left: -350px;
+    opacity: 0.7;
+    filter: blur(1px);
+    animation-duration: 9s;
+    animation-direction: reverse;
+    z-index: -4;
+  }
+  
+  @keyframes snow {
+    to {
+      transform: translateY(650px);
+    }
+  }
+th {
+    color: $font-color;
+    background-color: #c0b399!important;
+    border-color: #928a79!important;
+}
+ul {
+  color: white;
+}
+tbody,td,tr,table {
+    font-family: $main-font;
+    color: $font-color;
+    background-color: #c0b399!important;
+    border-color: #928a79!important;
+}
+a {
+    font-family: $main-font!important;
+    color: $font-color!important;
+}
+h2,p {
+    font-family: $main-font;
+    color: $font-color;
+}
+  h1 {
+    font-size: 36px;
+    color: $font-color; /* Use a deep red color for the text */
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #ffffff; /* Add a subtle white shadow */
+    font-family: $main-font;
+  }
+  
+  // /* Additional styles for a Christmas-themed feel */
+  // h1::before {
+  //   content: '\2605'; /* Unicode character for a star */
+  //   font-size: 42px;
+  //   margin-right: 10px;
+  // }
+  
+  // h1::after {
+  //   content: '\2605';
+  //   font-size: 42px;
+  //   margin-left: 10px;
+  // }
+  form {
+    color: white;
+  }

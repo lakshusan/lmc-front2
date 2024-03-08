@@ -1,0 +1,12 @@
+_site
+scripts/__pycache__/convert_notebooks.cpython-311.pyc
+scripts/__pycache__/convert_notebooks.cpython-310.pyc
+api/__pycache__/user.cpython-310.pyc
+_posts/*_IPYNB_2_.md
+nohup.out
+Gemfile.lock
+__pycache__/
+*-checkpoint.ipynb
+.ipynb checkpoints
+*.pyc
+convert_notebooks.cpython-310.pyc
