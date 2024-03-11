@@ -1,9 +1,9 @@
 title: Let 'em Cook
-description: The frontend for Let 'em Cook
-owner_name: Trevor Huang
-github_username: trevorhuang1
-github_repo: "lmc-frontend"
-baseurl: "/lmc-frontend"
+description: The frontend copy for Let 'em Cook (Lakshanya)
+owner_name: Lakshanya Sankaran
+github_username: lakshusan
+github_repo: "lmc-front2"
+baseurl: "/lmc-front2"
 remote_theme: jekyll/minima
 minima:
   social_links:
