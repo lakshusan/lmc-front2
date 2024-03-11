@@ -1,6 +1,6 @@
 var header = document.getElementById("header");
 header.textContent = "Congrats! You made a " + localStorage.getItem("bakedgood") + "!";
-var name = "/lmc-frontend/images/" + localStorage.getItem("bakedgood") + ".png";
+var name = "/lmc-front2/images/" + localStorage.getItem("bakedgood") + ".png";
 console.log(name);
 var image = document.getElementById("image");
 image.style.width = '200px';
@@ -14,7 +14,7 @@ setTimeout(function() {
     document.querySelector('.hidden').classList.remove('hidden');
 }, 6000);
 setTimeout(function() {
-    window.location.href = "/lmc-frontend/cook";
+    window.location.href = "/lmc-front2/cook";
 }, 9000);
 //
 //
