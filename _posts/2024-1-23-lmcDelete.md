@@ -15,7 +15,7 @@ A simple HTML login form with a Login action when button is pressed.
 
 The form triggers the login_user function defined in the JavaScript below when the Login button is pressed.
 -->
-<link rel="stylesheet" href="/lmc-frontend/LMC/JS/SCSS/lmcLogin.css">
+<link rel="stylesheet" href="/lmc-front2/LMC/JS/SCSS/lmcLogin.css">
 <div id="titleContainer">
     <h1 id="title">Let-M-Cook</h1>
 </div>
@@ -27,7 +27,7 @@ The form triggers the login_user function defined in the JavaScript below when t
 <div class="container">
     <form id="username" action="javascript:login_user()">
         <p>
-        <img src="/lmc-frontend/images/cookie.png" width="92px" height="100px">
+        <img src="/lmc-front2/images/cookie.png" width="92px" height="100px">
         </p>
         <!-- <p>
         <label>
