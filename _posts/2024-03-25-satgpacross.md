@@ -27,43 +27,35 @@ permalink: /satgpacross
     }
 </style>
 
-<h1 id="h1">SAT to GPA Converter</h1>
-
-<div class="container">
-    <img id="satImage" src="./images/satgpacross.jpg" alt="SAT GPA Image">
-    <form id="satForm" onsubmit="return convertSatToGpa()">
-        <p><label>
-            SAT Score:
-            <input class="userInput" type="number" name="satScore" id="satScore" required>
-        </label></p>
-        <p>
-            <button id="convertButton" type="submit">Convert</button>
-        </p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Estimator</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>GPA Estimator</h1>
+    <form id="satForm">
+    <label for="satScore">Enter SAT Score (out of 1600):</label>
+    <input type="number" id="satScore" name="satScore">
+    <button type="button" onclick="estimateGPA()">Estimate GPA</button>
     </form>
-</div>
-
-<script>
-    const satToGpaUrl = "http://127.0.0.1:8028/api/sat-to-gpa/";
-
-    function convertSatToGpa() {
-        const satScore = parseInt(document.getElementById('satScore').value);
-
-        // Construct the request body
-        const requestBody = {
-            satScore: satScore
-        };
-
-        // Configure the fetch request
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
-        };
-
-        // Send the fetch request to the backend
-        fetch(satToGpaUrl, requestOptions)
+    <p id="result"></p>
+    <script>
+        function estimateGPA() {
+            var SAT_score = document.getElementById('satScore').value;
+            fetch('http://127.0.0.1:8028/api/satgpacross/predict', { // Correct URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'SAT_score': SAT_score
+                })
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -71,16 +63,18 @@ permalink: /satgpacross
                 return response.json();
             })
             .then(data => {
-                // Update the UI with the calculated GPA
-                const gpa = data.gpa;
-                const h1 = document.getElementById('h1');
-                h1.textContent = `GPA: ${gpa}`;
+                // Check if data is valid JSON
+                if (data && typeof data === 'object') {
+                    document.getElementById('result').innerText = "Estimated GPA: " + data.GPA_estimate.toFixed(2);
+                } else {
+                    throw new Error('Invalid JSON data received');
+                }
             })
             .catch(error => {
-                console.error('There was a problem with your fetch operation:', error);
+                console.error('Error:', error);
+                // Handle errors here, e.g., display an error message to the user
             });
-
-        // Prevent form submission
-        return false;
-    }
-</script>
+        }
+    </script>
+</body>
+</html>
