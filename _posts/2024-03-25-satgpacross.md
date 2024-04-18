@@ -46,7 +46,7 @@ permalink: /satgpacross
     <p id="result"></p>
     <script>
         function estimateGPA() {
-            var satscore = document.getElementById('satScore').value;
+            var satscore = document.getElementById('satscore').value;
             fetch('http://127.0.0.1:8028/api/satgpacross', {
                 method: 'POST',
                 headers: {
