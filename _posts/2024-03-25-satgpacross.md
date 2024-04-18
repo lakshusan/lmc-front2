@@ -39,8 +39,8 @@ permalink: /satgpacross
 <body>
     <h1>GPA Estimator</h1>
     <form id="satForm">
-    <label for="satScore">Enter SAT Score (out of 1600):</label>
-    <input type="number" id="satScore" name="satScore">
+    <label for="satscore">Enter SAT Score (out of 1600):</label>
+    <input type="number" id="satscore" name="satscore">
     <button type="button" onclick="estimateGPA()">Estimate GPA</button>
     </form>
     <p id="result"></p>
