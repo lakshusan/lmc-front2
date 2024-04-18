@@ -46,14 +46,14 @@ permalink: /satgpacross
     <p id="result"></p>
     <script>
         function estimateGPA() {
-            var SAT_score = document.getElementById('satScore').value;
+            var satscore = document.getElementById('satScore').value;
             fetch('http://127.0.0.1:8028/api/satgpacross', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    'SAT_score': SAT_score
+                    'satscore': satscore
                 })
             })
             .then(response => {
