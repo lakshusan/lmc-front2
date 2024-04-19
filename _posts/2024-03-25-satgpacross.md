@@ -41,39 +41,40 @@ permalink: /satgpacross
     <form id="satForm">
     <label for="satscore">Enter SAT Score (out of 1600):</label>
     <input type="number" id="satscore" name="satscore">
-    <button type="button" onclick="estimateGPA()">Estimate GPA</button>
+    <!--<button type="submit" onclick="estimateGPA()">Estimate GPA</button>-->
+    <button type="submit" onclick="estimateGPA()">Estimate GPA</button>
     </form>
     <p id="result"></p>
     <script>
         function estimateGPA() {
-            var satscore = document.getElementById('satscore').value;
-            fetch('http://127.0.0.1:8028/api/satgpacross', {
-                method: 'POST',
+            document.getElementById('satForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+            var satscore = parseFloat(document.getElementById('satscore').value);
+            //fetch("http://127.0.0.1:8028/api/satgpacross/", {
+                fetch("http://127.0.0.1:8028/api/satgpacross/", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
-                },
+                    "Content-Type": "application/json; charset=UTF-8"
+                },                
                 body: JSON.stringify({
                     'satscore': satscore
-                })
+                })                                                    
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
+                    throw new Error('Failed Submit.  Check response');
+                }                
+                return response.json();                
             })
-            .then(data => {
-                // Check if data is valid JSON
-                if (data && typeof data === 'object') {
-                    document.getElementById('result').innerText = "Estimated GPA: " + data.GPA_estimate.toFixed(2);
-                } else {
-                    throw new Error('Invalid JSON data received');
-                }
-            })
+            .then(data => {                
+                console.log('GPAData submitted successfully:', data);                
+                alert('Data received from backend:\n' + JSON.stringify(data));
+            })                  
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error:', error.message);
                 // Handle errors here, e.g., display an error message to the user
             });
+        });
         }
     </script>
 </body>

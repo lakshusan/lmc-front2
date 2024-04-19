@@ -18,7 +18,7 @@ setTimeout(function() {
 }, 9000);
 //
 //
-const url = "https://lmc.stu.nighthawkcodingsociety.com/api/users/";
+const url = "http://127.0.0.1:8028/api/users/";
 const options = {
 method: 'GET',
 mode: 'cors',
