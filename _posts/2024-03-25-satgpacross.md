@@ -50,7 +50,6 @@ permalink: /satgpacross
             document.getElementById('satForm').addEventListener('submit', function(event) {
                 event.preventDefault();
             var satscore = parseFloat(document.getElementById('satscore').value);
-            //fetch("http://127.0.0.1:8028/api/satgpacross/", {
                 fetch("http://127.0.0.1:8028/api/satgpacross/", {
                 method: "POST",
                 headers: {
@@ -68,7 +67,8 @@ permalink: /satgpacross
             })
             .then(data => {                
                 console.log('GPAData submitted successfully:', data);                
-                alert('Data received from backend:\n' + JSON.stringify(data));
+                alert('Estimated GPA received from backend:\n' + JSON.stringify(data));
+                console.log('received from backend GPA = '+JSON.stringify(data));
             })                  
             .catch(error => {
                 console.error('Error:', error.message);
